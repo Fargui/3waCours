@@ -1,22 +1,81 @@
 class Player{
-    constructor(force, life, shot, name){
+    constructor(name, life, force){
         this._force = force
         this._life = life
-        this._shot = shot 
         this._name = name
+        this._shot = 0 
     }
-
-    shot(){
-
-    }
+    get name() {
+		return this._name;
+	}
+	computeDamage() {
+		return Math.round(100 * Math.random() * this._force) / 100;
+	}
+	decrementLife(dmg) {
+		this._life = Math.round(100 * (this._life - dmg)) / 100;
+	}
+	incrementShot() {
+		this._shot++;
+	}
+	isAlive() {
+		return this._life > 0;
+	}
 }
+setInterval(() => {
+    
+}, interval);
 
 class Dragon extends Player{
-    
-}
-class Knight extends Player{
+    constructor(name, life, shot, force){
+        super(name, life, shot, force)
+    }
 
 }
+class Knight extends Player{
+    constructor(name, life, shot, force){
+        super(name, life, shot, force)
+    }
+}
+
+class Game{
+    constructor(p1, p2){
+        this._player1 = p1
+        this._player2 = p2      
+    }
+
+   
+    run(){
+
+        while (this._player1.isAlive() && this._player2.isAlive()) {
+            let whoStart = Math.random();
+            const [assaillant, defenseur] = whoStart < 0.5 ? [this._player1, this._player2] : [this._player2, this._player1] ;
+    
+            // l'assaillant détermine les points de dommage
+                const dmg = assaillant.computeDamage();
+                // on retire ce dommage des PV de la victime
+                defenseur.decrementLife(dmg);
+                // incrémenter le compteur de shots de l'assaillant
+                assaillant.incrementShot();
+        }
+        this.displayResults()
+    }
+    displayResults() {
+		console.log(
+			`Le vainqueur est ${
+				this._player1.isAlive() ? this._player1.name : this._player2.name
+			}`
+		);
+		console.log(this);
+	}
+    
+}
+
+const dragon = new Dragon('Dragarius', 100, 10 )
+const knight = new Knight('Lancelot', 100, 10 )
+
+const game = new Game(dragon, knight);
+
+game.run();
 
 
 //qui frappe qui en random 
