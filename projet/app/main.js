@@ -1,3 +1,5 @@
+import Router from "vanilla-router";
+
 import app from './app.js';
 import AboutController from '../controllers/AboutController.js'
 import HomeController from '../controllers/HomeController.js'
@@ -5,6 +7,8 @@ import LoginController from '../controllers/LoginController.js'
 import SearchController from '../controllers/SearchController.js'
 
 import config from './config.js';
+
+import "../static/css/main.css"
 
 // --------------------------------------------------------------------------------------------------------------------
 // INITIALISATION DE L'APPLICATION
@@ -45,6 +49,7 @@ function initializeRouter() {
 // --------------------------------------------------------------------------------------------------------------------
 // CODE PRINCIPAL
 // --------------------------------------------------------------------------------------------------------------------
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // Initialisation du routeur.
